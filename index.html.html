@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Valentine 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;   /* 🔑 move content up */
+}
+
+/* FLOATING HEARTS */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    opacity: 0.8;
+    pointer-events: none;
+}
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* STAGE */
+#stage {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding-top: 40px;   /* 🔑 controls how high everything is */
+}
+
+/* QUESTION */
+#question {
+    opacity: 1;
+    transition: opacity 1.2s ease;
+    pointer-events: auto;
+}
+
+/* VIDEO */
+#videoBox {
+    position: absolute;
+    top: 40px;           /* 🔑 video appears in same upper area */
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+/* TEXT */
+h1 {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 22px;
+    margin: 6px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+#yes {
+    background: #ff4b5c;
+    color: white;
+    font-size: 30px;
+}
+
+#no {
+    background: white;
+    color: #ff4b5c;
+    font-size: 16px;
+}
+
+/* VIDEO */
+video {
+    width: 90vw;
+    max-width: 520px;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stage">
+
+    <!-- QUESTION -->
+    <div id="question">
+        <h1>Will you be my Valentine? 😁💝</h1>
+        <button id="yes" onclick="startTransition()">YES 😁</button>
+        <button id="no" onmouseover="moveButton()">NO 😞</button>
+    </div>
+
+    <!-- VIDEO -->
+    <div id="videoBox">
+        <h2>OFC YOU WOULD SAY YES 🫂💗</h2>
+        <p>You're my CUTIEEE 😚💕</p>
+
+        <video id="loveVideo" muted playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+</div>
+
+<script>
+/* HEARTS */
+function createHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = Math.random() * 18 + 14 + "px";
+    h.style.animationDuration = Math.random() * 4 + 6 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 9000);
+}
+setInterval(createHeart, 320);
+
+/* TRANSITION */
+function startTransition() {
+    const question = document.getElementById("question");
+    const videoBox = document.getElementById("videoBox");
+    const video = document.getElementById("loveVideo");
+
+    question.style.opacity = "0";
+    question.style.pointerEvents = "none";
+
+    setTimeout(() => {
+        question.style.display = "none";
+        videoBox.style.opacity = "1";
+        videoBox.style.pointerEvents = "auto";
+
+        video.muted = false;
+        video.volume = 1;
+        video.play();
+    }, 1200);
+
+    for (let i = 0; i < 25; i++) createHeart();
+}
+
+/* NO BUTTON ESCAPE */
+function moveButton() {
+    const btn = document.getElementById("no");
+    btn.style.position = "absolute";
+    btn.style.top = Math.random() * 60 + "px";
+    btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+}
+</script>
+
+</body>
+</html>
